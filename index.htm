@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PoseNet using ML5js</title>
+  <script src="ml5.js"></script>
+  <style media="screen">
+   .nose{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .leftEye{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .rightEye{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .leftEar{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .rightEar{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+    #video{
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      z-index: 1;
+    }
+    .spinner{
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      background-image: url(spin.gif);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-size: 20px;
+      background-color: white;
+      z-index: 3;
+    }
+  </style>
+</head>
+  <body>
+    <div class="nose"></div>
+    <div class="leftEye"></div>
+    <div class="rightEye"></div>
+    <div class="leftEar"></div>
+    <div class="rightEar"></div>
+    <video id="video" width="800" height="800"></video>
+    <div class="spinner"></div>
+    <script type="text/javascript">
+    let nose = {
+      x:-10,
+      y:-10
+    }, leftEye = {
+      x:-10,
+      y:-10
+    }, rightEye = {
+      x:-10,
+      y:-10
+    }, leftEar = {
+      x:-10,
+      y:-10
+    }, rightEar = {
+      x:-10,
+      y:-10
+    }
+    let spinner = document.querySelector('.spinner')
+    let video = document.querySelector('#video')
+    let n = document.querySelector('.nose')
+    let le = document.querySelector('.leftEye')
+    let re = document.querySelector('.rightEye')
+    let lear = document.querySelector('.leftEar')
+    let rear = document.querySelector('.rightEar')
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+      navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream){
+        video.srcObject = stream
+        video.play()
+      })
+    }
+    let posenet = ml5.poseNet(video, loaded)
+    function loaded(){
+      console.log('loaded')
+      spinner.style.display = `none`
+      console.log(posenet)
+    }
+    posenet.on('pose', r => {
+      if(r.length>=1){
+        let pose = r[0].pose.keypoints
+        console.log(pose[1].score)
+        if(r[0].pose.score<0.1){
+          nose = {
+            x:-10,
+            y:-10
+          }, leftEye = {
+            x:-10,
+            y:-10
+          }, rightEye = {
+            x:-10,
+            y:-10
+          }, leftEar = {
+            x:-10,
+            y:-10
+          }, rightEar = {
+            x:-10,
+            y:-10
+          }
+        }else{
+          if(pose[0].score>0.1){
+            nose = pose[0].position
+          }else{
+            nose = {x:-10, y:-10}
+          }
+          if(pose[1].score>0.1){
+            leftEye = pose[1].position
+          }else{
+            leftEye = {x:-10, y:-10}
+          }
+          if(pose[2].score>0.1){
+            rightEye = pose[2].position
+          }else{
+            rightEye = {x:-10, y:-10}
+          }
+          if(pose[3].score>0.1){
+            leftEar = pose[3].position
+          }else{
+            leftEar = {x:-10, y:-10}
+          }
+          if(pose[4].score>0.1){
+            rightEar = pose[4].position
+          }else{
+            rightEar = {x:-10, y:-10}
+          }
+        }
+      }else{
+        nose = {
+          x:-10,
+          y:-10
+        }, leftEye = {
+          x:-10,
+          y:-10
+        }, rightEye = {
+          x:-10,
+          y:-10
+        }, leftEar = {
+          x:-10,
+          y:-10
+        }, rightEar = {
+          x:-10,
+          y:-10
+        }
+      }
+
+    })
+    setInterval(()=>{
+
+      n.style.left = `${(nose.x/800*window.innerWidth)-10}px`
+      n.style.top = `${nose.y/800*window.innerHeight-10}px`
+      le.style.left = `${(leftEye.x/800*window.innerWidth)-10}px`
+      le.style.top = `${leftEye.y/800*window.innerHeight-10}px`
+      re.style.left = `${(rightEye.x/800*window.innerWidth)-10}px`
+      re.style.top = `${rightEye.y/800*window.innerHeight-10}px`
+      lear.style.left = `${(leftEar.x/800*window.innerWidth)-10}px`
+      lear.style.top = `${leftEar.y/800*window.innerHeight-10}px`
+      rear.style.left = `${(rightEar.x/800*window.innerWidth)-10}px`
+      rear.style.top = `${rightEar.y/800*window.innerHeight-10}px`
+    }, 16)
+    </script>
+  </body>
+</html>
