@@ -97,13 +97,17 @@ let nose = {
         }
       }
     })
+    let i = new Image()
+    i.src = 'nose.png'
+    document.body.append(i)
     setInterval(()=>{
       ctx.drawImage(video, 0, 0)
-      ctx.beginPath()
-      ctx.arc(nose.x/800*canvas.width, nose.y/800*canvas.height, 10, 0, 2*Math.PI)
-      ctx.fillStyle = 'red'
-      ctx.fill()
-      ctx.closePath()
+      ctx.drawImage(i, nose.x/800*canvas.width-25, nose.y/800*canvas.height-25)
+      // ctx.beginPath()
+      // ctx.arc(nose.x/800*canvas.width, nose.y/800*canvas.height, 10, 0, 2*Math.PI)
+      // ctx.fillStyle = 'red'
+      // ctx.fill()
+      // ctx.closePath()
       ctx.beginPath()
       ctx.arc(leftEye.x/800*canvas.width, leftEye.y/800*canvas.height, 10, 0, 2*Math.PI)
       ctx.fillStyle = 'red'
@@ -125,4 +129,4 @@ let nose = {
       ctx.fill()
       ctx.closePath()
 
-    }, 16)
+    }, 1)
