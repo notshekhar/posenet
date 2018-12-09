@@ -1,0 +1,66 @@
+.nose{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .leftEye{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .rightEye{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .leftEar{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+   .rightEar{
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background: red;
+     position: fixed;
+     z-index: 2
+   }
+    #video{
+      display: none;
+    }
+    #canvas{
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .spinner{
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      background-image: url(spin.gif);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-size: 20px;
+      background-color: white;
+      z-index: 3;
+    }
