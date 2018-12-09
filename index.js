@@ -98,7 +98,7 @@ let nose = {
       }
     })
     let i = new Image()
-    i.src = 'nose.png'
+    i.src = 'https://raw.githubusercontent.com/notshekhar/posenet/master/nose.png'
     document.body.append(i)
     setInterval(()=>{
       ctx.drawImage(video, 0, 0)
